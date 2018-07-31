@@ -245,6 +245,8 @@ static int statement_fetch_impl(lua_State *L, statement_t *statement, int named_
     }
 
     if (tuple >= PQntuples(statement->result)) {
+        PQclear(statement->result);
+        statement->result = NULL;
         lua_pushnil(L);  /* no more results */
         return 1;
     }
